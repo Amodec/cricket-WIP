@@ -1,0 +1,32 @@
+@page "/Match"
+
+<div class="container text-center">
+    <div class="row border-bottom border-2 border-dark">
+        <div class="col fs-3">Score</div>
+        <div class="col fs-2">Player 1</div>
+        <div class="col fs-1">CRICKET</div>
+        <div class="col fs-2">Player 2</div>
+        <div class="col fs-3">Score</div>
+    </div>
+    @for (int i = 20; i > 15; i--)
+    {
+        <div class="row">
+            <div class="col border-end border-1 border-dark">Score player 1</div>
+            <div class="col border-start border-end border-1 border-dark">Checkboxes Player 1</div>
+            <div class="col border-start border-end border-1 border-dark fs-1">@i.ToString()</div>
+            <div class="col border-start border-end border-1 border-dark">Checkboxes Player 2</div>
+            <div class="col border-start border-1 border-dark">Score Player 2</div>
+        </div>
+    }
+    <div class="row">
+        <div class="col border-end border-1 border-dark">Score player 1</div>
+        <div class="col border-start border-end border-1 border-dark">Checkboxes Player 1</div>
+        <div class="col border-start border-end border-1 border-dark fs-2">BULL</div>
+        <div class="col border-start border-end border-1 border-dark">Checkboxes Player 2</div>
+        <div class="col border-start border-1 border-dark">Score Player 2</div>
+    </div>
+</div>
+
+@code {
+    
+}
