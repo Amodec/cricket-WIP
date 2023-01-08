@@ -15,11 +15,11 @@
             <form>
                 <div class="form-group mb-4">
                     <label for="name">Name</label>
-                    <input type="text" @bind="nameInput" class="form-control w-50" id="name" placeholder="Enter your name" disabled="@(allPlayersAssigned)">
+                    <input type="text" @bind="nameInput" class="form-control w-50" id="name" placeholder="Enter your name" disabled="@(player)">
                 </div>
                 <div class="form-group">
                     <label for="nationalitySelect">Nationality</label>
-                    <select class="form-control w-50" @bind="nationalityInput" id="nationalitySelect" disabled="@(allPlayersAssigned)">
+                    <select class="form-control w-50" @bind="nationalityInput" id="nationalitySelect" disabled="@(player)">
                         <option selected disabled>Pick your country</option>
                         <option value="Belgium">Belgium</option>
                         <option value="Netherlands">Netherlands</option>
@@ -28,25 +28,16 @@
                         <option value="Germany">Germany</option>
                     </select>
                 </div>
-                <button type="submit" class="btn btn-dark mt-5" @onclick="Send" disabled="@(!IsConnected || allPlayersAssigned)">Sign up</button>
+                <button class="btn btn-dark mt-5" @onclick="Send" disabled="@(IsConnected == false)">Sign up</button>
             </form>
         </div>
         <div class="col-6 ps-5 pe-2">
             <h1>Next matchup</h1>
-            @if (player1 != null)
+            @if (player != null)
             {
                 <div class="card">
                     <div class="card-body">
-                        @player1.Name - @player1.Nationality
-                    </div>
-                </div>
-            }
-            @if (allPlayersAssigned)
-            {
-                <h1>VS.</h1>
-                <div class="card">
-                    <div class="card-body">
-                        @player2.Name - @player2.Nationality
+                        @player.Name - @player.Nationality
                     </div>
                 </div>
             }
@@ -55,13 +46,10 @@
 </div>
 
 @code {
-
     private HubConnection? hubConnection;
-    private Player player1 = new Player();
-    private Player player2 = new Player();
+    private Player player;
     private string? nameInput;
     private string? nationalityInput;
-    private bool allPlayersAssigned;
 
     protected override async Task OnInitializedAsync()
     {
@@ -69,31 +57,27 @@
             .WithUrl(NavigationManager.ToAbsoluteUri("/scorehub"))
             .WithAutomaticReconnect()
             .Build();
-    }
 
+        hubConnection.On<string, string>("ReceivePlayer", (name, nationality) =>
+        {
+            player = new Player()
+            {
+                Name = name,
+                Nationality = nationality,
+            };
+
+            InvokeAsync(StateHasChanged);
+        });
+
+        await hubConnection.StartAsync();
+    }
+    
     private async Task Send()
     {
-        while (allPlayersAssigned == false)
-        {
-            if (player1 == null)
-            {
-                player1.Name = nameInput;
-                player1.Nationality = nationalityInput;
-            }
-            else
-            {
-                player2.Name = nameInput;
-                player2.Nationality = nationalityInput;
-                allPlayersAssigned = true;
-            }
-        }
-
         if (hubConnection != null)
         {
             await hubConnection.SendAsync("SendPlayer", nameInput, nationalityInput);
         }
-
-        await InvokeAsync(StateHasChanged);
     }
 
     public bool IsConnected => hubConnection?.State == HubConnectionState.Connected;
@@ -105,5 +89,4 @@
             await hubConnection.DisposeAsync(); 
         }
     }
-
 }
