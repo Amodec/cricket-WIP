@@ -1,4 +1,8 @@
 ﻿@page "/"
+@using Microsoft.AspNetCore.SignalR.Client
+@using Examen.CricketDarts.Pin.Domain
+@inject NavigationManager NavigationManager
+@implements IAsyncDisposable
 
 <PageTitle>Index</PageTitle>
 
@@ -11,28 +15,95 @@
             <form>
                 <div class="form-group mb-4">
                     <label for="name">Name</label>
-                    <input type="text" class="form-control w-50" id="name" placeholder="Enter your name">
+                    <input type="text" @bind="nameInput" class="form-control w-50" id="name" placeholder="Enter your name" disabled="@(allPlayersAssigned)">
                 </div>
                 <div class="form-group">
-                  <label for="nationalitySelect">Nationality</label>
-                  <select class="form-control w-50" id="nationalitySelect">
-                    <option selected disabled>Pick your country</option>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                  </select>
+                    <label for="nationalitySelect">Nationality</label>
+                    <select class="form-control w-50" @bind="nationalityInput" id="nationalitySelect" disabled="@(allPlayersAssigned)">
+                        <option selected disabled>Pick your country</option>
+                        <option value="Belgium">Belgium</option>
+                        <option value="Netherlands">Netherlands</option>
+                        <option value="England">England</option>
+                        <option value="Scotland">Scotland</option>
+                        <option value="Germany">Germany</option>
+                    </select>
                 </div>
-                <button type="submit" class="btn btn-dark mt-5">Sign up</button>
+                <button type="submit" class="btn btn-dark mt-5" @onclick="Send" disabled="@(!IsConnected || allPlayersAssigned)">Sign up</button>
             </form>
         </div>
-    <div class="col-6 ps-5 pe-2">
+        <div class="col-6 ps-5 pe-2">
             <h1>Next matchup</h1>
-        <ul class="list-group">
-                <li class="list-group-item">John Smith</li>
-                <li class="list-group-item">Jane Doe</li>
-            </ul>
+            @if (player1 != null)
+            {
+                <div class="card">
+                    <div class="card-body">
+                        @player1.Name - @player1.Nationality
+                    </div>
+                </div>
+            }
+            @if (allPlayersAssigned)
+            {
+                <h1>VS.</h1>
+                <div class="card">
+                    <div class="card-body">
+                        @player2.Name - @player2.Nationality
+                    </div>
+                </div>
+            }
         </div>
     </div>
 </div>
+
+@code {
+
+    private HubConnection? hubConnection;
+    private Player player1 = new Player();
+    private Player player2 = new Player();
+    private string? nameInput;
+    private string? nationalityInput;
+    private bool allPlayersAssigned;
+
+    protected override async Task OnInitializedAsync()
+    {
+        hubConnection = new HubConnectionBuilder()
+            .WithUrl(NavigationManager.ToAbsoluteUri("/scorehub"))
+            .WithAutomaticReconnect()
+            .Build();
+    }
+
+    private async Task Send()
+    {
+        while (allPlayersAssigned == false)
+        {
+            if (player1 == null)
+            {
+                player1.Name = nameInput;
+                player1.Nationality = nationalityInput;
+            }
+            else
+            {
+                player2.Name = nameInput;
+                player2.Nationality = nationalityInput;
+                allPlayersAssigned = true;
+            }
+        }
+
+        if (hubConnection != null)
+        {
+            await hubConnection.SendAsync("SendPlayer", nameInput, nationalityInput);
+        }
+
+        await InvokeAsync(StateHasChanged);
+    }
+
+    public bool IsConnected => hubConnection?.State == HubConnectionState.Connected;
+
+    public async ValueTask DisposeAsync()
+    {
+        if (hubConnection != null)
+        {
+            await hubConnection.DisposeAsync(); 
+        }
+    }
+
+}

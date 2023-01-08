@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Examen.CricketDarts.Pin", "Examen.CricketDarts.Pin\Examen.CricketDarts.Pin.csproj", "{07E15816-AC03-4449-A16D-01A78254C15F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScoresClient", "ScoresClient\ScoresClient.csproj", "{66F17D67-04CA-452D-ACA3-DADBCFE3BD40}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{07E15816-AC03-4449-A16D-01A78254C15F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{07E15816-AC03-4449-A16D-01A78254C15F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{07E15816-AC03-4449-A16D-01A78254C15F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66F17D67-04CA-452D-ACA3-DADBCFE3BD40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66F17D67-04CA-452D-ACA3-DADBCFE3BD40}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66F17D67-04CA-452D-ACA3-DADBCFE3BD40}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66F17D67-04CA-452D-ACA3-DADBCFE3BD40}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
