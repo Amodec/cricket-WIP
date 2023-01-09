@@ -191,8 +191,12 @@
                     allPlayersAssigned = true;
                 }
             }
-
             InvokeAsync(StateHasChanged);
+        });
+
+        hubConnection.On<Score>("ReceiveScore", (score) =>
+        {
+            
         });
 
         await hubConnection.StartAsync();
