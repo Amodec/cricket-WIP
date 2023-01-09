@@ -7,8 +7,8 @@
 
 <div class="container text-center">
     <div class="row border-bottom border-2 border-dark">                   @*HEADER*@
-        <div class="col fs-3" @bind="player1.Name"></div>
-        <div class="col fs-2">Player 1</div>
+        <div class="col fs-3">Score</div>
+        <div class="col fs-2" @bind="player1.Name"></div>
         <div class="test col fs-1">CRICKET</div>
         <div class="col fs-2" @bind="player2.Name"></div>
         <div class="col fs-3">Score</div>
@@ -170,16 +170,12 @@
     private Player player1;
     private Player player2;
     private bool allPlayersAssigned;
-
+    
     protected override async Task OnInitializedAsync()
-    {
-        await Connect();
-    }
-
-    private async Task Connect()
     {
         hubConnection = new HubConnectionBuilder()
             .WithUrl(NavigationManager.ToAbsoluteUri("https://localhost:7116/scorehub"))
+            .WithAutomaticReconnect()
             .Build();
         hubConnection.On<Player>("ReceivePlayer", (player) =>
         {
@@ -201,5 +197,4 @@
 
         await hubConnection.StartAsync();
     }
-
 }

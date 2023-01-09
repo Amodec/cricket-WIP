@@ -1,4 +1,4 @@
-﻿@page "/"
+﻿@page "/signup"
 @using Microsoft.AspNetCore.SignalR.Client
 @using Examen.CricketDarts.Pin.Domain
 @inject NavigationManager NavigationManager
@@ -15,11 +15,11 @@
             <form>
                 <div class="form-group mb-4">
                     <label for="name">Name</label>
-                    <input type="text" @bind="nameInput" class="form-control w-50" id="name" placeholder="Enter your name" disabled="@(player)">
+                    <input type="text" @bind="nameInput" class="form-control w-50" id="name" placeholder="Enter your name" disabled="@(allPlayersAssigned)">
                 </div>
                 <div class="form-group">
                     <label for="nationalitySelect">Nationality</label>
-                    <select class="form-control w-50" @bind="nationalityInput" id="nationalitySelect" disabled="@(player)">
+                    <select class="form-control w-50" @bind="nationalityInput" id="nationalitySelect" disabled="@(allPlayersAssigned)">
                         <option selected disabled>Pick your country</option>
                         <option value="Belgium">Belgium</option>
                         <option value="Netherlands">Netherlands</option>
@@ -33,11 +33,20 @@
         </div>
         <div class="col-6 ps-5 pe-2">
             <h1>Next matchup</h1>
-            @if (player != null)
+            @if (player1 != null)
             {
                 <div class="card">
                     <div class="card-body">
-                        @player.Name - @player.Nationality
+                        @player1.Name - @player1.Nationality
+                    </div>
+                </div>
+            }
+            @if (allPlayersAssigned)
+            {
+                <h2>VS.</h2>
+                <div class="card">
+                    <div class="card-body">
+                        @player2.Name - @player2.Nationality
                     </div>
                 </div>
             }
@@ -47,9 +56,11 @@
 
 @code {
     private HubConnection? hubConnection;
-    private Player player;
+    private Player player1;
+    private Player player2;
     private string? nameInput;
     private string? nationalityInput;
+    private bool allPlayersAssigned = false;
 
     protected override async Task OnInitializedAsync()
     {
@@ -58,13 +69,26 @@
             .WithAutomaticReconnect()
             .Build();
 
-        hubConnection.On<string, string>("ReceivePlayer", (name, nationality) =>
+        hubConnection.On<Player>("ReceivePlayer", (player) =>
         {
-            player = new Player()
+            if (player1 == null)
             {
-                Name = name,
-                Nationality = nationality,
-            };
+                player1 = new Player()
+                {
+                    Name = player.Name,
+                    Nationality = player.Nationality,
+                };
+            }
+            else
+            {
+                player2 = new Player()
+                {
+                    Name = player.Name,
+                    Nationality = player.Nationality,
+                };
+                
+                allPlayersAssigned = true;
+            }
 
             InvokeAsync(StateHasChanged);
         });
@@ -74,9 +98,15 @@
     
     private async Task Send()
     {
+        Player playerToSend = new Player()
+        {
+            Name = nameInput,
+            Nationality = nationalityInput,
+        };
+        
         if (hubConnection != null)
         {
-            await hubConnection.SendAsync("SendPlayer", nameInput, nationalityInput);
+            await hubConnection.SendAsync("SendPlayer", playerToSend);
         }
     }
 

@@ -5,13 +5,13 @@ namespace Examen.CricketDarts.Pin.Hubs;
 
 public class ScoreHub : Hub
 {
-    public Task SendScore(string player, int throw1, int throw2, int throw3, int score)
+    public Task SendScore(Score score)
     {
-        return Clients.All.SendAsync("ReceiveScore",player,throw1,throw2,throw3,score);
+        return Clients.All.SendAsync("ReceiveScore",score);
     }
 
-    public Task SendPlayer(String name, String nationality)
+    public Task SendPlayer(Player player)
     {
-        return Clients.All.SendAsync("ReceivePlayer", name, nationality);
+        return Clients.All.SendAsync("ReceivePlayer", player);
     }
 }
