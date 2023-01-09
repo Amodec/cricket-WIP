@@ -5,163 +5,49 @@
 
 <PageTitle>Index</PageTitle>
 
-<div class="container text-center">
-    <div class="row border-bottom border-2 border-dark">                   @*HEADER*@
-        <div class="col fs-3">Score</div>
-        <div class="col fs-2" @bind="player1.Name"></div>
-        <div class="test col fs-1">CRICKET</div>
-        <div class="col fs-2" @bind="player2.Name"></div>
-        <div class="col fs-3">Score</div>
-    </div>
-    @for (int i = 20; i > 15; i--)
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">Player</th>
+        <th scope="col">Throw 1</th>
+        <th scope="col">Throw 2</th>
+        <th scope="col">Throw3</th>
+        <th scope="col">Score</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (Score score in scores)
     {
-        <div class="row">
-            <div class="col border-end border-1 border-dark">              @*START : PLAYER 1 SCORE COLUMN*@
-                <div class="form-control">
-                    @* PLAYER 1 REGULAR SCORE *@
-                </div>                                                     @*END : PLAYER 1 SCORE COLUMN*@
-            </div>
-            <div class="col border-start border-end border-1 border-dark"> @*START : PLAYER 1 CHECKBOX COLUMN*@
-                <div class="row">
-                    <div class="col form-check">
-                        <label for="p1-@(i)-Single">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="checkbox bi bi-circle fs-2" viewBox="0 0 16 16">
-                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                            </svg>
-                            <input type="checkbox" id="p1-@(i)-Single" class="checkbox">
-                        </label>
-                    </div>
-                    <div class="col form-check">
-                        <label for="p1-@(i)-Double">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="checkbox bi bi-slash-circle fs-2" viewBox="0 0 16 16">
-                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                                <path d="M11.354 4.646a.5.5 0 0 0-.708 0l-6 6a.5.5 0 0 0 .708.708l6-6a.5.5 0 0 0 0-.708z"/>
-                            </svg>
-                            <input type="checkbox" id="p1-@(i)-Double" class="checkbox">
-                        </label>
-                    </div>
-                    <div class="col form-check">
-                        <label for="p1-@(i)-Triple">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="checkbox bi bi-x-circle fs-2" viewBox="0 0 16 16">
-                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-                            </svg>
-                            <input type="checkbox" id="p1-@(i)-Triple" class="checkbox">
-                        </label>
-                    </div>
-                </div>
-            </div>                                                        @*END : PLAYER 1 CHECKBOX COLUMN*@
-            <div class="col border-start border-end border-1 border-dark fs-1">@i.ToString()</div> @*MIDDLE POINTS COLUMN*@
-            <div class="col border-start border-end border-1 border-dark"> @*START : PLAYER 2 CHECKBOX COLUMN*@
-                <div class="row">
-                    <div class="col text-center form-check">
-                        <label for="p2-@(i)-Triple">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="checkbox bi bi-x-circle fs-2" viewBox="0 0 16 16">
-                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-                            </svg>
-                            <input type="checkbox" id="p2-@(i)-Triple" class="checkbox">
-                        </label>
-                    </div>
-                    <div class="col text-center form-check h-auto">
-                        <label for="p2-@(i)-Double">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="checkbox bi bi-slash-circle fs-2" viewBox="0 0 16 16">
-                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                                <path d="M11.354 4.646a.5.5 0 0 0-.708 0l-6 6a.5.5 0 0 0 .708.708l6-6a.5.5 0 0 0 0-.708z"/>
-                            </svg>
-                            <input type="checkbox" id="p2-@(i)-Double" class="checkbox">
-                        </label>
-                    </div>
-                    <div class="col text-center form-check">
-                        <label for="p2-@(i)-Single">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="checkbox bi bi-circle fs-2" viewBox="0 0 16 16">
-                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                            </svg>
-                            <input type="checkbox" id="p2-@(i)-Single" class="checkbox">
-                        </label>
-                    </div>
-                </div>
-            </div>                                                        @*END : PLAYER 2 CHECKBOX COLUMN*@
-            <div class="col border-start border-1 border-dark">           @*START : PLAYER 2 SCORE COLUMN*@
-                <div class="form-control">
-                    @* PLAYER 2 REGULAR SCORE *@
-                </div>
-            </div>                                                        @*END : PLAYER 2 SCORE COLUMN*@
-        </div>
+        <tr>
+            @if (score.Player == "Player 1")
+            {
+                <th scope="row">@player1.Name</th>
+            }
+            else
+            {
+                <th scope="row">@player2.Name</th>
+            }
+          
+            <td>@score.Throw1</td>
+            <td>@score.Throw2</td>
+            <td>@score.Throw3</td>
+            <td>@score.ScoreAmount</td>
+        </tr>
     }
-    <div class="row">                                                     @*START BULL ROW*@
-        <div class="col border-end border-1 border-dark">                 
-            <div class="form-control">
-                @* PLAYER 1 BULL SCORE *@
+    </tbody>
+</table>
+<div class="container text-center">
+    <div class="row">
+        @if (player1 != null && player2 != null)
+        {
+            <div class="col">
+                <h3>@player1.Name Score: <span>@player1TotalScore</span></h3>
             </div>
-        </div>
-        <div class="col border-start border-end border-1 border-dark">
-            <div class="row">
-                <div class="col text-center form-check">
-                    <label for="p1BullSingle">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="checkbox bi bi-circle fs-2" viewBox="0 0 16 16">
-                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                        </svg>
-                        <input type="checkbox" id="p1BullSingle" class="checkbox">
-                    </label>
-                </div>
-                <div class="col text-center form-check">
-                    <label for="p1BullDouble">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="checkbox bi bi-slash-circle fs-2" viewBox="0 0 16 16">
-                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                            <path d="M11.354 4.646a.5.5 0 0 0-.708 0l-6 6a.5.5 0 0 0 .708.708l6-6a.5.5 0 0 0 0-.708z"/>
-                        </svg>
-                        <input type="checkbox" id="p1BullDouble" class="checkbox">
-                    </label>
-                </div>
-                <div class="col text-center form-check">
-                    <label for="p1BullTriple">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="checkbox bi bi-x-circle fs-2" viewBox="0 0 16 16">
-                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                            <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-                        </svg>
-                        <input type="checkbox" id="p1BullTriple" class="checkbox">
-                    </label>
-                </div>
+            <div class="col">
+                <h3>@player2.Name Score: <span>@player2TotalScore</span></h3>
             </div>
-        </div>
-        <div class="col border-start border-end border-1 border-dark fs-2">BULL</div>
-        <div class="col border-start border-end border-1 border-dark">
-            <div class="row">
-                <div class="col text-center form-check">
-                    <label for="p2BullTriple">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="checkbox bi bi-x-circle fs-2" viewBox="0 0 16 16">
-                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                            <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-                        </svg>
-                        <input type="checkbox" id="p2BullTriple" class="checkbox">
-                    </label>
-                </div>
-                <div class="col text-center form-check">
-                    <label for="p2BullDouble">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="checkbox bi bi-slash-circle fs-2" viewBox="0 0 16 16">
-                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                            <path d="M11.354 4.646a.5.5 0 0 0-.708 0l-6 6a.5.5 0 0 0 .708.708l6-6a.5.5 0 0 0 0-.708z"/>
-                        </svg>
-                        <input type="checkbox" id="p2BullDouble" class="checkbox">
-                    </label>
-                </div>
-                <div class="col text-center form-check">
-                    <label for="p2BullSingle">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="checkbox bi bi-circle fs-2" viewBox="0 0 16 16">
-                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                        </svg>
-                        <input type="checkbox" id="p2BullSingle" class="checkbox">
-                    </label>
-                </div>
-            </div>
-        </div>
-        <div class="col border-start border-1 border-dark">
-            <div class="form-control">
-                @* PLAYER 2 BULL SCORE *@
-            </div>
-        </div>
-    </div>                                                                @*END BULL ROW*@
+        }
+    </div>
 </div>
 
 @code {
@@ -169,7 +55,10 @@
 
     private Player player1;
     private Player player2;
+    public int? player1TotalScore { get; set; }
+    public int? player2TotalScore { get; set; }
     private bool allPlayersAssigned;
+    public List<Score> scores { get; set; } = new List<Score>();
     
     protected override async Task OnInitializedAsync()
     {
@@ -183,11 +72,20 @@
             {
                 if (player1 == null)
                 {
-                    player1 = player;
+                    player1 = new Player()
+                    {
+                        Name = player.Name,
+                        Nationality = player.Nationality,
+                    };
                 }
                 else
                 {
-                    player2 = player;
+                    player2 = new Player()
+                    {
+                        Name = player.Name,
+                        Nationality = player.Nationality,
+                    };
+                    
                     allPlayersAssigned = true;
                 }
             }
@@ -196,7 +94,18 @@
 
         hubConnection.On<Score>("ReceiveScore", (score) =>
         {
-            
+            scores.Add(score);
+
+            if (score.Player == "Player 1")
+            {
+                player1TotalScore += (int)score.ScoreAmount;
+            }
+            else
+            {
+                player2TotalScore += (int)score.ScoreAmount;
+            }
+
+            InvokeAsync(StateHasChanged);
         });
 
         await hubConnection.StartAsync();

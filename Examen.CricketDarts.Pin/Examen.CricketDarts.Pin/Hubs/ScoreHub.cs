@@ -7,7 +7,7 @@ public class ScoreHub : Hub
 {
     public Task SendScore(Score score)
     {
-        return Clients.All.SendAsync("ReceiveScore",score);
+        return Clients.All.SendAsync("ReceiveScore", score);
     }
 
     public Task SendPlayer(Player player)

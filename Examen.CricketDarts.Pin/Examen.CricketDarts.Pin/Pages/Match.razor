@@ -1,6 +1,7 @@
 @page "/Match"
 @using Examen.CricketDarts.Pin.Domain
 @using Microsoft.AspNetCore.SignalR.Client
+@using System.Reflection.Metadata
 @inject NavigationManager NavigationManager
 @implements IAsyncDisposable
 
@@ -18,7 +19,7 @@
             <div class="row">
                 <div class="col border-end border-1 border-dark">              @*START : PLAYER 1 SCORE COLUMN*@
                     <div class="form-control">
-                        <select class="form-select" name="scorePlayer1For@(i)" id="scorePlayer1For@(i)" @bind="Player1Score">
+                        <select class="form-select" name="scorePlayer1For@(i.ToString())" id="scorePlayer1For@(i.ToString())" @bind="Player1Score">
                             <option value="" selected disabled hidden>Select a score</option>
                             @for (int e = 1; e <= 9; e++)
                             {
@@ -30,29 +31,29 @@
                 <div class="col border-start border-end border-1 border-dark"> @*START : PLAYER 1 CHECKBOX COLUMN*@
                     <div class="row">
                         <div class="col form-check">
-                            <label for="p1-@(i)-Single">
+                            <label for="p1-@(i.ToString())-Single">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="checkbox bi bi-circle fs-2" viewBox="0 0 16 16">
                                     <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
                                 </svg>
-                                <input type="checkbox" id="p1-@(i)-Single" class="checkbox" value="Player1Single@(i)" @bind="Player1Throws">
+                                <input type="checkbox" id="p1-@(i.ToString())-Single" class="checkbox" value="Player1Single@(i.ToString())" @bind="Player1Throws">
                             </label>
                         </div>
                         <div class="col form-check">
-                            <label for="p1-@(i)-Double">
+                            <label for="p1-@(i.ToString())-Double">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="checkbox bi bi-slash-circle fs-2" viewBox="0 0 16 16">
                                     <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
                                     <path d="M11.354 4.646a.5.5 0 0 0-.708 0l-6 6a.5.5 0 0 0 .708.708l6-6a.5.5 0 0 0 0-.708z"/>
                                 </svg>
-                                <input type="checkbox" id="p1-@(i)-Double" class="checkbox" value="Player1Double@(i)" @bind="Player1Throws">
+                                <input type="checkbox" id="p1-@(i.ToString())-Double" class="checkbox" value="Player1Double@(i.ToString())" @bind="Player1Throws">
                             </label>
                         </div>
                         <div class="col form-check">
-                            <label for="p1-@(i)-Triple">
+                            <label for="p1-@(i.ToString())-Triple">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="checkbox bi bi-x-circle fs-2" viewBox="0 0 16 16">
                                     <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
                                     <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
                                 </svg>
-                                <input type="checkbox" id="p1-@(i)-Triple" class="checkbox" value="Player1Triple@(i)" @bind="Player1Throws">
+                                <input type="checkbox" id="p1-@(i.ToString())-Triple" class="checkbox" value="Player1Triple@(i.ToString())" @bind="Player1Throws">
                             </label>
                         </div>
                     </div>
@@ -61,36 +62,36 @@
                 <div class="col border-start border-end border-1 border-dark"> @*START : PLAYER 2 CHECKBOX COLUMN*@
                     <div class="row">
                         <div class="col text-center form-check">
-                            <label for="p2-@(i)-Triple">
+                            <label for="p2-@(i.ToString())-Triple">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="checkbox bi bi-x-circle fs-2" viewBox="0 0 16 16">
                                     <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
                                     <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
                                 </svg>
-                                <input type="checkbox" id="p2-@(i)-Triple" class="checkbox" value="Player2Triple@(i)" @bind="Player2Throws">
+                                <input type="checkbox" id="p2-@(i.ToString())-Triple" class="checkbox" value="Player2Triple@(i.ToString())" @bind="Player2Throws">
                             </label>
                         </div>
                         <div class="col text-center form-check h-auto">
-                            <label for="p2-@(i)-Double">
+                            <label for="p2-@(i.ToString())-Double">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="checkbox bi bi-slash-circle fs-2" viewBox="0 0 16 16">
                                     <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
                                     <path d="M11.354 4.646a.5.5 0 0 0-.708 0l-6 6a.5.5 0 0 0 .708.708l6-6a.5.5 0 0 0 0-.708z"/>
                                 </svg>
-                                <input type="checkbox" id="p2-@(i)-Double" class="checkbox" value="Player2Double@(i)" @bind="Player2Throws">
+                                <input type="checkbox" id="p2-@(i.ToString())-Double" class="checkbox" value="Player2Double@(i.ToString())" @bind="Player2Throws">
                             </label>
                         </div>
                         <div class="col text-center form-check">
-                            <label for="p2-@(i)-Single">
+                            <label for="p2-@(i.ToString())-Single">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="checkbox bi bi-circle fs-2" viewBox="0 0 16 16">
                                     <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
                                 </svg>
-                                <input type="checkbox" id="p2-@(i)-Single" class="checkbox" value="Player2Single@(i)" @bind="Player2Throws">
+                                <input type="checkbox" id="p2-@(i.ToString())-Single" class="checkbox" value="Player2Single@(i.ToString())" @bind="Player2Throws">
                             </label>
                         </div>
                     </div>
                 </div>                                                        @*END : PLAYER 2 CHECKBOX COLUMN*@
                 <div class="col border-start border-1 border-dark">           @*START : PLAYER 2 SCORE COLUMN*@
                     <div class="form-control">
-                        <select class="form-select" name="scorePlayer2For@(i)" id="scorePlayer2@(i)" @bind="Player2Score">
+                        <select class="form-select" name="scorePlayer2For@(i.ToString())" id="scorePlayer2@(i.ToString())" @bind="Player2Score">
                             <option value="" selected disabled hidden>Select a score</option>
                             @for (int e = 1; e <= 9; e++)
                             {
@@ -166,10 +167,10 @@
         </div>                                                                @*END BULL ROW*@
         <div class="row">
             <div class="col">
-                <button class="bg-dark" >Sumbit Leg For Player 1</button>
+                <button class="bg-dark" disabled="@(!IsConnected)" @onclick="SubmitPlayer1Score">Sumbit Leg For Player 1</button>
             </div>
             <div>
-                <button class="bg-dark" >Sumbit Leg For Player 2</button>
+                <button class="bg-dark" disabled="@(!IsConnected)" @onclick="SubmitPlayer2Score">Sumbit Leg For Player 2</button>
             </div>
         </div>
     </form>
@@ -202,8 +203,11 @@
     public Player player1;
     public Player player2;
 
-    public List<int> Player1Score { get; set; } = new List<int>();
-    public List<int> Player2Score { get; set; } = new List<int>();
+    public List<string> Player1Score { get; set; } = new List<string>();
+    public List<string> Player2Score { get; set; } = new List<string>();    
+    
+    public List<int> Player1ScoreInt { get; set; } = new List<int>();
+    public List<int> Player2ScoreInt { get; set; } = new List<int>();
 
     public List<string> Player1Throws { get; set; } = new List<string>();
     public List<string> Player2Throws { get; set; } = new List<string>();
@@ -218,21 +222,57 @@
         await hubConnection.StartAsync();
     }
     
-    // private async Task SubmitPlayer1Score()
-    // {
-    //     if (hubConnection != null)
-    //     {
-    //         await hubConnection.SendAsync("SendPlayer", playerToSend);
-    //     }
-    // }
-    //
-    // private async Task SubmitPlayer2Score()
-    // {
-    //     if (hubConnection != null)
-    //     {
-    //         await hubConnection.SendAsync("SendPlayer", playerToSend);
-    //     }
-    // }
+    private async Task SubmitPlayer1Score()
+    {
+        foreach (string score in Player1Score)
+        {
+            int scoreInt = int.Parse(score);
+            Player1ScoreInt.Add(scoreInt);
+        }
+        
+        Score Score = new Score()
+        {
+            Player = "Player1",
+            Throw1 = Player1Throws[0],
+            Throw2 = Player1Throws[1],
+            Throw3 = Player1Throws[2],
+            ScoreAmount = Player1ScoreInt.Sum(),
+        };
+        
+        if (hubConnection != null)
+        {
+            await hubConnection.SendAsync("SendScore", Score);
+        }
+        
+        Player1Throws.Clear();
+        Player1Score.Clear();
+    }
+    
+    private async Task SubmitPlayer2Score()
+    {
+        foreach (string score in Player2Score)
+        {
+            int scoreInt = int.Parse(score);
+            Player2ScoreInt.Add(scoreInt);
+        }
+        
+        Score Score = new Score()
+        {
+            Player = "Player2",
+            Throw1 = Player2Throws[0],
+            Throw2 = Player2Throws[1],
+            Throw3 = Player2Throws[2],
+            ScoreAmount = Player2ScoreInt.Sum(),
+        };
+        
+        if (hubConnection != null)
+        {
+            await hubConnection.SendAsync("SendScore", Score);
+        }
+        
+        Player2Throws.Clear();
+        Player2Score.Clear();
+    }
 
     public bool IsConnected => hubConnection?.State == HubConnectionState.Connected;
 
